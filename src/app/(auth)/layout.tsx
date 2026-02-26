@@ -1,7 +1,4 @@
-// Layout compartido para las rutas de auth (login y registro)
-// Este layout NO tiene sidebar ni navbar, solo centra el contenido
-// en la pantalla. El route group (auth) hace que esta URL no aparezca
-// en la ruta: /login en vez de /(auth)/login
+import Image from "next/image";
 
 export default function AuthLayout({
   children,
@@ -9,8 +6,22 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ backgroundColor: "var(--dolci-crema)" }}
+    >
       <div className="w-full max-w-md">
+        {/* Logo centrado */}
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/logo.png"
+            alt="Dolci Enid"
+            width={160}
+            height={160}
+            className="rounded-full"
+            priority
+          />
+        </div>
         {children}
       </div>
     </div>

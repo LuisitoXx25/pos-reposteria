@@ -2,30 +2,23 @@
 
 import { cambiarEstadoPedido } from "./actions";
 
-// ============================================
-// Select para cambiar estado del pedido
-// ============================================
-// Cada vez que se cambia el select, se envía el form
-// automáticamente con el nuevo estado.
-
-export function CambiarEstadoSelect({
-  pedidoId,
-  estadoActualId,
-}: {
-  pedidoId: string;
-  estadoActualId: number;
-}) {
+export function CambiarEstadoSelect({ pedidoId, estadoActualId }: { pedidoId: string; estadoActualId: number }) {
   return (
     <form action={cambiarEstadoPedido} className="inline">
       <input type="hidden" name="pedido_id" value={pedidoId} />
       <select
         name="estado_id"
         defaultValue={estadoActualId}
-        onChange={(e) => {
-          // Enviar el form automáticamente al cambiar
-          e.target.form?.requestSubmit();
+        onChange={(e) => e.target.form?.requestSubmit()}
+        style={{
+          fontSize: "0.75rem",
+          padding: "0.25rem 0.5rem",
+          borderRadius: "0.375rem",
+          border: "1px solid var(--dolci-borde)",
+          backgroundColor: "var(--dolci-blanco)",
+          color: "var(--dolci-texto-light)",
+          cursor: "pointer",
         }}
-        className="text-xs border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-pink-500"
       >
         <option value={1}>Pendiente</option>
         <option value={2}>Entregado</option>

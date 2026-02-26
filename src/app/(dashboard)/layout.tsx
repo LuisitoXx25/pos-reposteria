@@ -1,62 +1,81 @@
-import Link from "next/link";
-import { logout } from "../(auth)/actions";
+"use client";
 
-// Layout del dashboard: todas las rutas protegidas comparten
-// este layout con sidebar de navegación.
-// El route group (dashboard) no aparece en la URL.
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { logout } from "../(auth)/actions";
+import Image from "next/image";
+
+const navItems = [
+  { href: "/", label: "Dashboard", icon: "📊" },
+  { href: "/clientes", label: "Clientes", icon: "👥" },
+  { href: "/productos", label: "Productos", icon: "🧁" },
+  { href: "/pedidos", label: "Pedidos", icon: "📋" },
+];
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
-        <h1 className="text-xl font-bold text-pink-600 mb-8">🧁 POS Repostería</h1>
+  const pathname = usePathname();
 
-        <nav className="space-y-2 flex-1">
-          <Link
-            href="/"
-            className="block px-4 py-2 rounded-md text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/clientes"
-            className="block px-4 py-2 rounded-md text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
-          >
-            Clientes
-          </Link>
-          <Link
-            href="/productos"
-            className="block px-4 py-2 rounded-md text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
-          >
-            Productos
-          </Link>
-          <Link
-            href="/pedidos"
-            className="block px-4 py-2 rounded-md text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
-          >
-            Pedidos
-          </Link>
+  return (
+    <div className="min-h-screen flex" style={{ backgroundColor: "var(--dolci-crema)" }}>
+      {/* Sidebar */}
+      <aside className="sidebar">
+        {/* Logo */}
+        <div className="flex items-center justify-center mb-8 pt-2">
+          <Image
+            src="/logo.png"
+            alt="Dolci Enid"
+            width={120}
+            height={120}
+            className="rounded-full"
+            priority
+          />
+        </div>
+
+        {/* Navigation */}
+        <nav className="space-y-1 flex-1">
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`sidebar-link ${isActive ? "sidebar-link-active" : ""}`}
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Logout al fondo del sidebar */}
-        <form action={logout}>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors text-left"
-          >
-            Cerrar Sesión
-          </button>
-        </form>
+        {/* Logout */}
+        <div style={{ borderTop: "1px solid var(--dolci-borde-light)", paddingTop: "1rem" }}>
+          <form action={logout}>
+            <button
+              type="submit"
+              className="sidebar-link w-full text-left"
+              style={{ color: "var(--dolci-texto-muted)" }}
+            >
+              <span>🚪</span>
+              <span>Cerrar Sesión</span>
+            </button>
+          </form>
+        </div>
       </aside>
 
-      {/* Contenido principal */}
-      <main className="flex-1 p-8">
-        {children}
+      {/* Main content */}
+      <main className="flex-1 p-8 overflow-auto">
+        <div className="max-w-6xl mx-auto">
+          {children}
+        </div>
       </main>
     </div>
   );

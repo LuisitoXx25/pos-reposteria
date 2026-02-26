@@ -2,26 +2,457 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   DOLCI ENID — Design System
+   Paleta: Rosa pétalo, beige cálido, blanco crema
+   Tono: Elegante, femenino, artesanal
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colores principales extraídos del logo */
+  --dolci-beige: #C4A882;
+  --dolci-beige-light: #D4BFA6;
+  --dolci-beige-dark: #A8896A;
+  --dolci-rosa: #E8C4B8;
+  --dolci-rosa-light: #F2DDD5;
+  --dolci-rosa-dark: #D4A494;
+  --dolci-crema: #FDF8F4;
+  --dolci-blanco: #FFFCF9;
+  --dolci-texto: #5C4A3A;
+  --dolci-texto-light: #8B7565;
+  --dolci-texto-muted: #B09E8E;
+  --dolci-borde: #E8DDD3;
+  --dolci-borde-light: #F0E8E0;
+  --dolci-exito: #7BA884;
+  --dolci-alerta: #D4A44A;
+  --dolci-error: #C47070;
+  --dolci-info: #7A9BB5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset y base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--dolci-crema);
+  color: var(--dolci-texto);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* ============================================
+   Tipografía
+   ============================================ */
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--dolci-texto);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   Componentes base
+   ============================================ */
+
+/* Inputs y selects */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  background-color: var(--dolci-blanco);
+  border: 1px solid var(--dolci-borde);
+  color: var(--dolci-texto);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--dolci-rosa-dark);
+  box-shadow: 0 0 0 3px rgba(212, 164, 148, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--dolci-texto-muted);
+}
+
+input[readonly] {
+  background-color: var(--dolci-crema);
+  color: var(--dolci-texto-light);
+  cursor: default;
+}
+
+label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--dolci-texto-light);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   Botones
+   ============================================ */
+.btn-primary {
+  background-color: var(--dolci-beige);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--dolci-beige-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(196, 168, 130, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--dolci-texto-light);
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--dolci-borde);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--dolci-blanco);
+  border-color: var(--dolci-beige-light);
+  color: var(--dolci-texto);
+}
+
+.btn-danger {
+  color: var(--dolci-error);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: rgba(196, 112, 112, 0.08);
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+  background-color: var(--dolci-blanco);
+  border: 1px solid var(--dolci-borde-light);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(92, 74, 58, 0.06);
+}
+
+.card-stat {
+  background-color: var(--dolci-blanco);
+  border: 1px solid var(--dolci-borde-light);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+/* ============================================
+   Badges
+   ============================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.badge-pendiente {
+  background-color: rgba(212, 164, 74, 0.12);
+  color: var(--dolci-alerta);
+}
+
+.badge-entregado {
+  background-color: rgba(123, 168, 132, 0.12);
+  color: var(--dolci-exito);
+}
+
+.badge-cancelado {
+  background-color: rgba(196, 112, 112, 0.1);
+  color: var(--dolci-error);
+}
+
+.badge-activo {
+  background-color: rgba(123, 168, 132, 0.12);
+  color: var(--dolci-exito);
+}
+
+.badge-inactivo {
+  background-color: rgba(176, 158, 142, 0.15);
+  color: var(--dolci-texto-muted);
+}
+
+.badge-atrasado {
+  background-color: var(--dolci-error);
+  color: white;
+}
+
+.badge-hoy {
+  background-color: rgba(196, 112, 112, 0.12);
+  color: var(--dolci-error);
+}
+
+.badge-manana {
+  background-color: rgba(212, 164, 74, 0.12);
+  color: var(--dolci-alerta);
+}
+
+.badge-proximos {
+  background-color: rgba(122, 155, 181, 0.12);
+  color: var(--dolci-info);
+}
+
+/* ============================================
+   Tablas
+   ============================================ */
+.table-container {
+  background-color: var(--dolci-blanco);
+  border: 1px solid var(--dolci-borde-light);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.table-container table {
+  width: 100%;
+}
+
+.table-container thead {
+  background-color: var(--dolci-crema);
+  border-bottom: 1px solid var(--dolci-borde);
+}
+
+.table-container th {
+  text-align: left;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--dolci-texto-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table-container td {
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+  color: var(--dolci-texto);
+}
+
+.table-container tbody tr {
+  border-bottom: 1px solid var(--dolci-borde-light);
+  transition: background-color 0.15s ease;
+}
+
+.table-container tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table-container tbody tr:hover {
+  background-color: rgba(232, 196, 184, 0.06);
+}
+
+/* ============================================
+   Modal / Overlay
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(92, 74, 58, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background-color: var(--dolci-blanco);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(92, 74, 58, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-content-lg {
+  max-width: 48rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   Alertas
+   ============================================ */
+.alert-error {
+  background-color: rgba(196, 112, 112, 0.08);
+  border: 1px solid rgba(196, 112, 112, 0.2);
+  color: var(--dolci-error);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.alert-warning {
+  background-color: rgba(212, 164, 74, 0.08);
+  border: 1px solid rgba(212, 164, 74, 0.2);
+  color: var(--dolci-alerta);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.alert-urgent {
+  background-color: var(--dolci-error);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+.link-primary {
+  color: var(--dolci-beige-dark);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-primary:hover {
+  color: var(--dolci-beige);
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+.sidebar {
+  background-color: var(--dolci-blanco);
+  border-right: 1px solid var(--dolci-borde-light);
+  width: 16rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--dolci-texto-light);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(232, 196, 184, 0.15);
+  color: var(--dolci-texto);
+}
+
+.sidebar-link-active {
+  background-color: rgba(232, 196, 184, 0.2);
+  color: var(--dolci-texto);
+  font-weight: 500;
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--dolci-borde);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dolci-beige-light);
+}
+
+/* ============================================
+   Transitions
+   ============================================ */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
 }

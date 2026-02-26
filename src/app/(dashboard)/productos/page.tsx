@@ -4,10 +4,6 @@ import { formatearMoneda, formatearFecha } from "@/lib/utils";
 import { CrearProductoForm } from "./crear-form";
 import { ToggleActivoBoton } from "./toggle-activo-boton";
 
-// ============================================
-// Página principal de Productos
-// ============================================
-
 export default async function ProductosPage({
   searchParams,
 }: {
@@ -18,92 +14,53 @@ export default async function ProductosPage({
 
   return (
     <div>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Productos</h1>
-          <p className="text-gray-500 mt-1">
-            {productos.length} {productos.length === 1 ? "producto" : "productos"} registrados
+          <h1 style={{ fontSize: "1.75rem", fontWeight: 600 }}>Productos</h1>
+          <p style={{ color: "var(--dolci-texto-muted)", fontSize: "0.875rem", marginTop: "0.25rem" }}>
+            {productos.length} {productos.length === 1 ? "producto registrado" : "productos registrados"}
           </p>
         </div>
+        <CrearProductoForm />
       </div>
 
-      {/* Error */}
-      {params.error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-6 text-sm">
-          {params.error}
-        </div>
-      )}
+      {params.error && <div className="alert-error mb-6">{params.error}</div>}
 
-      {/* Formulario crear */}
-      <CrearProductoForm />
-
-      {/* Tabla */}
       {productos.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <p className="text-gray-500">No hay productos registrados todavía.</p>
-          <p className="text-gray-400 text-sm mt-1">Usa el formulario de arriba para agregar tu primer producto.</p>
+        <div className="card text-center" style={{ padding: "3rem" }}>
+          <p style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🧁</p>
+          <p style={{ color: "var(--dolci-texto-muted)" }}>No hay productos registrados todavía.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+        <div className="table-container">
+          <table>
+            <thead>
               <tr>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nombre
-                </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Precio
-                </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Estado
-                </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Registrado
-                </th>
-                <th className="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Acciones
-                </th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Registrado</th>
+                <th style={{ textAlign: "right" }}>Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody>
               {productos.map((producto) => (
-                <tr
-                  key={producto.id}
-                  className={`hover:bg-gray-50 ${!producto.activo ? "opacity-50" : ""}`}
-                >
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                    {producto.nombre}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    {formatearMoneda(producto.precio)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                        producto.activo
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-500"
-                      }`}
-                    >
+                <tr key={producto.id} style={{ opacity: producto.activo ? 1 : 0.5 }}>
+                  <td style={{ fontWeight: 500 }}>{producto.nombre}</td>
+                  <td>{formatearMoneda(producto.precio)}</td>
+                  <td>
+                    <span className={`badge ${producto.activo ? "badge-activo" : "badge-inactivo"}`}>
                       {producto.activo ? "Activo" : "Inactivo"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td style={{ color: "var(--dolci-texto-muted)", fontSize: "0.8125rem" }}>
                     {formatearFecha(producto.created_at)}
                   </td>
-                  <td className="px-6 py-4 text-right space-x-3">
-                    <Link
-                      href={`/productos/${producto.id}/editar`}
-                      className="text-sm text-pink-600 hover:text-pink-700 font-medium"
-                    >
-                      Editar
-                    </Link>
-                    <ToggleActivoBoton
-                      id={producto.id}
-                      activo={producto.activo}
-                      nombre={producto.nombre}
-                    />
+                  <td style={{ textAlign: "right" }}>
+                    <div className="flex items-center justify-end gap-3">
+                      <Link href={`/productos/${producto.id}/editar`} className="link-primary">Editar</Link>
+                      <ToggleActivoBoton id={producto.id} activo={producto.activo} nombre={producto.nombre} />
+                    </div>
                   </td>
                 </tr>
               ))}
